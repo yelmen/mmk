@@ -1,0 +1,81 @@
+@if (product(); as p) {
+  <div class="overlay" (click)="closed.emit()">
+    <div class="dialog" role="dialog" aria-modal="true" [attr.aria-label]="p.name" (click)="$event.stopPropagation()">
+      <button #closeBtn class="x" (click)="closed.emit()" aria-label="Kapat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18" /></svg>
+      </button>
+
+      <!-- Görsel alanı -->
+      <div class="visual" [class.cutout]="p.cutout && !showScene()">
+        @if (showScene() && p.scene) {
+          <img class="photo" [src]="p.scene" [alt]="p.name + ' mekân görseli'" />
+        } @else {
+          @if (p.cutout) {
+            <img class="door" [src]="p.image" [alt]="p.name + ' çelik kapı'" />
+          } @else {
+            <img class="photo" [src]="p.image" [alt]="p.name + ' çelik kapı'" />
+          }
+        }
+
+        <div class="nav">
+          <button (click)="prev.emit()" aria-label="Önceki model">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+          </button>
+          <span>{{ position() }} / {{ total() }}</span>
+          <button (click)="next.emit()" aria-label="Sonraki model">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+
+        @if (p.scene) {
+          <div class="switch" role="tablist">
+            <button [class.on]="!showScene()" (click)="showScene.set(false)">Kapı</button>
+            <button [class.on]="showScene()" (click)="showScene.set(true)">Mekânda</button>
+          </div>
+        }
+      </div>
+
+      <!-- Bilgi alanı -->
+      <div class="body">
+        <p class="eyebrow">{{ p.finish }}</p>
+        <h3 class="display">{{ p.name }}</h3>
+        <p class="tagline">{{ p.tagline }}</p>
+        <p class="desc">{{ p.description }}</p>
+
+        <ul class="tags">
+          @for (t of p.tags; track t) {
+            <li>{{ t }}</li>
+          }
+        </ul>
+
+        @if (p.specs) {
+          <dl class="specs">
+            @for (s of p.specs; track s.label) {
+              <div>
+                <dt>{{ s.label }}</dt>
+                <dd>{{ s.value }}</dd>
+              </div>
+            }
+          </dl>
+        }
+
+        @if (p.note) {
+          <p class="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16.5v.01" /></svg>
+            {{ p.note }}
+          </p>
+        }
+
+        <div class="cta">
+          <button class="btn btn-primary" (click)="requestQuote(p)">
+            Teklif Al
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+          <!-- <a class="btn btn-ghost" [href]="whatsapp(p)" target="_blank" rel="noopener">WhatsApp</a> -->
+        </div>
+
+        <p class="fine">Görseller örnek olarak sunulmuştur, ürünün birebir yapısını yansıtmaz.</p>
+      </div>
+    </div>
+  </div>
+}

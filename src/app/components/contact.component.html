@@ -1,0 +1,79 @@
+<section class="section contact" id="iletisim">
+  <div class="container">
+    <header class="head" reveal="none">
+      <p class="eyebrow">İletişim</p>
+      <h2 class="display h-lg">
+        <span class="line"><span>Girişinizi</span></span>
+        <span class="line"><span style="--rd: 0.12s"><span class="accent">birlikte</span> tasarlayalım.</span></span>
+      </h2>
+    </header>
+
+    <div class="grid">
+      <!-- Bilgiler -->
+      <div class="info" reveal="left">
+        <div class="block">
+          <small>Adres</small>
+          <p>{{ company.address }}</p>
+          <a [href]="mapLink" target="_blank" rel="noopener" class="link">Yol tarifi al →</a>
+        </div>
+        <div class="block">
+          <small>Telefon</small>
+          @for (p of company.phones; track p.href) {
+            <a [href]="p.href" class="big">{{ p.label }}</a>
+          }
+        </div>
+        <div class="block">
+          <small>E-posta</small>
+          <a [href]="'mailto:' + company.email" class="big mail">{{ company.email }}</a>
+        </div>
+        <p class="legal">{{ company.legal }}</p>
+
+        <div class="map">
+          <iframe [src]="mapUrl" title="MMK Grup konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <!-- <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate reveal="right" [delay]="120">
+        <h3 class="display">Teklif & Bilgi Formu</h3>
+
+        <div class="field" [class.err]="invalid('name')">
+          <input id="name" type="text" formControlName="name" placeholder=" " autocomplete="name" />
+          <label for="name">Ad Soyad</label>
+          @if (invalid('name')) { <span class="msg">Lütfen adınızı girin.</span> }
+        </div>
+
+        <div class="field" [class.err]="invalid('phone')">
+          <input id="phone" type="tel" formControlName="phone" placeholder=" " autocomplete="tel" />
+          <label for="phone">Telefon</label>
+          @if (invalid('phone')) { <span class="msg">Geçerli bir telefon numarası girin.</span> }
+        </div>
+
+        <div class="field select">
+          <select id="product" formControlName="product">
+            <option value="">Genel bilgi / model seçmedim</option>
+            @for (p of products; track p.id) {
+              <option [value]="p.name">{{ p.name }}</option>
+            }
+          </select>
+          <label for="product">İlgilendiğiniz model</label>
+        </div>
+
+        <div class="field">
+          <textarea id="message" rows="4" formControlName="message" placeholder=" "></textarea>
+          <label for="message">Mesajınız (ölçü, adet, renk vb.)</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          WhatsApp ile Gönder
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </button>
+
+        @if (sent()) {
+          <p class="ok" role="status">Mesajınız WhatsApp'a aktarıldı. Teşekkür ederiz!</p>
+        }
+        <p class="hint">Form, bilgilerinizi hazır bir WhatsApp mesajına dönüştürür. Siparişlerinizde RAL kodunu belirtmeyi unutmayın.</p>
+      </form> -->
+    </div>
+  </div>
+</section>

@@ -1,0 +1,60 @@
+<section class="section tech" id="teknoloji">
+  <div class="container">
+    <header class="head" reveal="none">
+      <p class="eyebrow">Teknoloji & Dayanıklılık</p>
+      <h2 class="display h-lg">
+        <span class="line"><span>Tasarımın altında</span></span>
+        <span class="line"><span style="--rd: 0.12s">yatan <span class="accent">dayanıklılık</span>.</span></span>
+      </h2>
+    </header>
+
+    <div class="layout">
+      <!-- 3D katman görseli -->
+      <div class="viz" reveal="zoom" [tilt]="5" aria-hidden="true">
+        <div class="scene">
+          <div class="stack" [attr.data-active]="active()">
+            <div class="plane p-frame" [class.on]="active() === 0"><i></i></div>
+            <div class="plane p-leaf" [class.on]="active() === 1"></div>
+            <div class="plane p-reinforce" [class.on]="active() === 2"></div>
+            <div class="plane p-fill" [class.on]="active() === 3"></div>
+            <div class="plane p-lock" [class.on]="active() === 4"><b></b><b></b><b></b></div>
+          </div>
+        </div>
+        <span class="legend">{{ layers[active()].title }} — {{ layers[active()].value }}</span>
+        <span class="disc">Görsel örnek olarak sunulmuştur, ürünün birebir yapısını yansıtmaz.</span>
+      </div>
+
+      <!-- Katman listesi -->
+      <div class="list" reveal="right" [delay]="100">
+        @for (l of layers; track l.id; let i = $index) {
+          <button class="item" [class.on]="active() === i" (click)="select(i)" (mouseenter)="select(i)" [attr.aria-expanded]="active() === i">
+            <span class="n">0{{ i + 1 }}</span>
+            <span class="t">
+              <strong>{{ l.title }}</strong>
+              <em>{{ l.value }}</em>
+            </span>
+            <span class="plus" aria-hidden="true"></span>
+            <span class="more"><span>{{ l.text }}</span></span>
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="numbers">
+      @for (n of numbers; track n.l; let i = $index) {
+        <div reveal="up" [delay]="i * 100">
+          <b class="display"><span [counter]="n.v" [suffix]="n.s"></span></b>
+          <span>{{ n.l }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="badge" reveal="up">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6l-8-3Z" /><path d="m8.5 12 2.5 2.5 4.5-5" /></svg>
+      <p>
+        <strong>TSE belgeli üretim.</strong> Tüm metal imalatı ürünlerimiz kalite standartlarına uygun üretilir; ısı ve ses
+        yalıtımıyla güvenlik ve konfor bir arada sunulur.
+      </p>
+    </div>
+  </div>
+</section>

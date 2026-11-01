@@ -1,0 +1,85 @@
+<section class="section collection" id="koleksiyon">
+  <div class="container">
+    <header class="head">
+      <div class="split" reveal="none">
+        <p class="eyebrow">Design Collection · 2026</p>
+        <h2 class="display h-lg">
+          <span class="line"><span>Her kapı,</span></span>
+          <span class="line"><span style="--rd: 0.12s">bir <span class="accent">imza</span>.</span></span>
+        </h2>
+      </div>
+      <p class="lead" reveal="up" [delay]="200">
+        Ceviz, antrasit ve gri tonların endüstriyel zarafetle buluştuğu {{ all.length }} özgün model. Detayları görmek
+        için bir kapıya dokunun.
+      </p>
+    </header>
+
+    <!-- Araç çubuğu -->
+    <div class="toolbar" reveal="up">
+      <div class="chips" role="tablist" aria-label="Model filtreleri">
+        <button class="chip" role="tab" [class.on]="filter() === 'Tümü'" [attr.aria-selected]="filter() === 'Tümü'" (click)="setFilter('Tümü')">
+          Tümü <sup>{{ count('Tümü') }}</sup>
+        </button>
+        @for (f of finishes; track f) {
+          <button class="chip" role="tab" [class.on]="filter() === f" [attr.aria-selected]="filter() === f" (click)="setFilter(f)">
+            {{ f }} <sup>{{ count(f) }}</sup>
+          </button>
+        }
+      </div>
+
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+        <input type="search" placeholder="Model ara… (ör. Chevron)" [value]="query()" (input)="onSearch($event)" aria-label="Model ara" />
+      </label>
+    </div>
+
+    <p class="result" aria-live="polite">{{ list().length }} model listeleniyor</p>
+
+    <!-- Ürün ızgarası -->
+    <div class="grid">
+      @for (p of list(); track p.id; let i = $index) {
+        <div class="cell" reveal="up" [delay]="($index % 4) * 90">
+          <article
+            class="card"
+            [tilt]="7"
+            tabindex="0"
+            role="button"
+            [attr.aria-label]="p.name + ' detaylarını aç'"
+            (click)="open(p)"
+            (keydown.enter)="open(p)"
+            (keydown.space)="open(p); $event.preventDefault()"
+          >
+            <div class="media" [class.cutout]="p.cutout" [class.photo]="!p.cutout">
+              <span class="idx">{{ num(p) }}</span>
+              <span class="fin">{{ p.finish }}</span>
+              <img [src]="p.image" [alt]="p.name + ' çelik kapı modeli'" loading="lazy" decoding="async" width="620" height="1100" />
+              <span class="spot"></span>
+            </div>
+            <div class="info">
+              <h3 class="display">{{ p.name }}</h3>
+              <p>{{ p.tagline }}</p>
+              <span class="more">
+                İncele
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </span>
+            </div>
+          </article>
+        </div>
+      } @empty {
+        <div class="empty">
+          <p class="display h-md">Aradığınız model bulunamadı.</p>
+          <button class="btn btn-ghost" (click)="reset()">Filtreleri temizle</button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <app-product-modal
+    [product]="selected()"
+    [position]="selectedIndex() + 1"
+    [total]="list().length"
+    (closed)="close()"
+    (prev)="step(-1)"
+    (next)="step(1)"
+  />
+</section>

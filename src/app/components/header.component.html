@@ -1,0 +1,48 @@
+<header class="hdr" [class.scrolled]="scrolled()" [class.hidden]="hidden()" [class.open]="menuOpen()">
+  <div class="container bar">
+    <a href="#" class="brand" (click)="top($event)" aria-label="MMK Grup — ana sayfa">
+      <img src="assets/logo.png" alt="MMK Grup Metal Çelik Kapı logosu" width="64" height="43" />
+      <span class="brand-text">
+        <b>MMK GRUP</b>
+        <small>Metal Çelik Kapı</small>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Ana menü">
+      @for (item of nav; track item.id) {
+        <a [href]="'#' + item.id" [class.active]="active() === item.id" (click)="go(item.id, $event)">
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <a href="#iletisim" class="cta" (click)="go('iletisim', $event)">
+      <span>Teklif Al</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </a>
+
+    <button class="burger" (click)="toggle()" [attr.aria-expanded]="menuOpen()" aria-label="Menüyü aç/kapat">
+      <i></i><i></i>
+    </button>
+  </div>
+
+  <!-- Mobil tam ekran menü -->
+  <div class="mobile" [class.show]="menuOpen()">
+    <div class="mobile-in container">
+      <nav>
+        @for (item of nav; track item.id; let i = $index) {
+          <a [href]="'#' + item.id" (click)="go(item.id, $event)" [style.--i]="i">
+            <em>0{{ i + 1 }}</em>{{ item.label }}
+          </a>
+        }
+      </nav>
+      <div class="mobile-info">
+        @for (p of company.phones; track p.href) {
+          <a [href]="p.href">{{ p.label }}</a>
+        }
+        <a [href]="'mailto:' + company.email">{{ company.email }}</a>
+        <p>{{ company.address }}</p>
+      </div>
+    </div>
+  </div>
+</header>

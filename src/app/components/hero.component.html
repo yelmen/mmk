@@ -1,0 +1,82 @@
+<section class="hero" id="anasayfa">
+  <!-- Arka plan katmanları -->
+  <div class="bg" aria-hidden="true">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+    <div class="beam"></div>
+    <div class="lines"></div>
+    <span class="bigword">MMK</span>
+    <div class="grain"></div>
+  </div>
+
+  <div class="container grid">
+    <!-- Metin -->
+    <div class="copy">
+      <p class="eyebrow tag">Design Collection · 2026</p>
+
+      <h1 class="display h-xl title" aria-label="Endüstriyel Zarafet">
+        <span class="line"><span style="--rd: 0.15s">Endüstriyel</span></span>
+        <span class="line"><span style="--rd: 0.3s"><span class="accent">Zarafet</span>.</span></span>
+      </h1>
+
+      <p class="lead sub">
+        Ceviz dokunun sıcaklığı, antrasit metalin gücüyle buluşuyor. Modern mimari için tasarlanan,
+        TSE belgeli yüksek güvenlikli çelik kapı koleksiyonunu keşfedin.
+      </p>
+
+      <div class="actions">
+        <a href="#koleksiyon" class="btn btn-primary" (click)="to('koleksiyon', $event)">
+          Koleksiyonu Keşfet
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+        <a href="#iletisim" class="btn btn-ghost" (click)="to('iletisim', $event)">Teklif Al</a>
+      </div>
+
+      <dl class="stats">
+        @for (s of stats; track s.label) {
+          <div>
+            <dt><span [counter]="s.value" [suffix]="s.suffix"></span></dt>
+            <dd>{{ s.label }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+
+    <!-- 3D kapı sahnesi -->
+    <div class="stage" role="group" aria-label="Öne çıkan modeller">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="floor"></div>
+
+      <div class="doors">
+        @for (p of featured; track p.id; let i = $index) {
+          <button
+            class="door"
+            [attr.data-pos]="pos(i)"
+            [class.is-active]="pos(i) === 0"
+            [attr.aria-label]="p.name + ' modelini göster'"
+            (click)="go(i)"
+          >
+            <img [src]="p.image" [alt]="p.name + ' çelik kapı'" width="620" height="1100" [attr.fetchpriority]="i === 0 ? 'high' : null" />
+          </button>
+        }
+      </div>
+
+      <div class="caption" aria-live="polite">
+        <span class="num">0{{ index() + 1 }} <i>/</i> 0{{ featured.length }}</span>
+        <strong class="display">{{ current().name }}</strong>
+        <em>{{ current().tagline }}</em>
+        <div class="dots">
+          @for (p of featured; track p.id; let i = $index) {
+            <button [class.on]="i === index()" (click)="go(i)" [attr.aria-label]="p.name"></button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#koleksiyon" class="scroll" (click)="to('koleksiyon', $event)" aria-label="Aşağı kaydır">
+    <span class="mouse"><i></i></span>
+    <span class="txt">Kaydır</span>
+  </a>
+</section>
